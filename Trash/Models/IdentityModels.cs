@@ -34,6 +34,6 @@ namespace Trash.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<Trash.Models.Employee> Employees { get; set; }
+       
     }
 }
