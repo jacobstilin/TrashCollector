@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@if (ViewBag.displayMenu == "Yes")
+{
+    <h1>Welcome Employee. Now you can do things.</h1>
+    <h3>
+        <li>@Html.ActionLink("Manage Role", "Index", "Role")</li>
+    </h3>
+
+}
+else
+{
+
+    <h2>  Welcome <strong>@ViewBag.Name</strong>  </h2>
+
+    <li>@Html.ActionLink("Set Up", "Create", "Customers")</li>
+    <li>@Html.ActionLink("Edit Info", "Edit", "Customers")</li>
+}

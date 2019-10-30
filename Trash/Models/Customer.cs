@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -9,7 +10,12 @@ namespace Trash.Models
     public class Customer
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
