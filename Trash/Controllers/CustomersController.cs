@@ -46,7 +46,7 @@ namespace Trash.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Email, Id, FirstName, LastName, StreetAddress, City, State, ZipCode, PickUpDay, Balance, MonthlyCharge, PickUpConfirmed, Start, End")] Customer customer)
+        public ActionResult Create([Bind(Include = "Id, FirstName, LastName, StreetAddress, City, State, ZipCode, PickUpDay, Balance, MonthlyCharge, PickUpConfirmed, Start, End")] Customer customer)
         {
             if (ModelState.IsValid)
             {

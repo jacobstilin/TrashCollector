@@ -12,8 +12,7 @@ namespace Trash.Models
         [Key]
         public string Id { get; set; }
 
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        
 
 
 
@@ -33,24 +32,29 @@ namespace Trash.Models
         public string State { get; set; }
 
         [Display(Name = "Zip Code")]
-        public int ZipCode { get; set; }
+        public int? ZipCode { get; set; }
 
         [Display(Name = "Pick Up Day")]
         public DateTime PickUpDay { get; set; }
 
         [Display(Name = "Balance")]
-        public double Balance { get; set; }
+        public double? Balance { get; set; }
 
         [Display(Name = "Monthly Charge")]
-        public double MonthlyCharge { get; set; }
+        public double? MonthlyCharge { get; set; }
 
         [Display(Name = "Pick Up Confirmed")]
         public bool PickUpConfirmed { get; set; }
 
         [Display(Name = "Start")]
-        public DateTime Start { get; set; }
+        public DateTime? Start { get; set; }
 
         [Display(Name = "End")]
-        public DateTime End { get; set; }
+        public DateTime? End { get; set; }
+
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+
     }
 }
