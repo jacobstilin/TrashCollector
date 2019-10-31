@@ -10,7 +10,7 @@ namespace Trash.Models
     public class Customer
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         
 
@@ -35,7 +35,7 @@ namespace Trash.Models
         public int? ZipCode { get; set; }
 
         [Display(Name = "Pick Up Day")]
-        public DateTime PickUpDay { get; set; }
+        public DateTime? PickUpDay { get; set; }
 
         [Display(Name = "Balance")]
         public double? Balance { get; set; }

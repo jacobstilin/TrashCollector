@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -46,30 +47,26 @@ namespace Trash.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id, FirstName, LastName, StreetAddress, City, State, ZipCode, PickUpDay, Balance, MonthlyCharge, PickUpConfirmed, Start, End")] Customer customer)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,StreetAddress,City,State,ZipCode,PickUpConfirmed")] Customer customer)
         {
             if (ModelState.IsValid)
             {
+                customer.ApplicationId = User.Identity.GetUserId();
                 db.Customers.Add(customer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "User");
             }
 
             return View(customer);
         }
 
         // GET: Customers/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
+            
+            string userId = User.Identity.GetUserId();
+            Customer customer = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+            
             return View(customer);
         }
 
@@ -78,41 +75,87 @@ namespace Trash.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id")] Customer customer)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,StreetAddress,City,State,ZipCode,Balance,PickUpDay,PickUpConfirmed,Start,End")] Customer customer)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customer).State = EntityState.Modified;
+                string userId = User.Identity.GetUserId();
+                Customer customerFromDb = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+                customerFromDb.FirstName = customer.FirstName;
+                customerFromDb.LastName = customer.LastName;
+                customerFromDb.StreetAddress = customer.StreetAddress;
+                customerFromDb.City = customer.City;
+                customerFromDb.State = customer.State;
+                customerFromDb.ZipCode = customer.ZipCode;
+                customerFromDb.Balance = customer.Balance;
+                customerFromDb.PickUpDay = customer.PickUpDay;
+                customerFromDb.PickUpConfirmed = customer.PickUpConfirmed;
+                customerFromDb.Start = customer.Start;
+                customerFromDb.End = customer.End;
+                
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "User");
+            }
+            return View(customer);
+        }
+
+        public ActionResult EditPickup()
+        {
+
+            string userId = User.Identity.GetUserId();
+            Customer customer = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPickUp([Bind(Include = "Id,FirstName,LastName,StreetAddress,City,State,ZipCode,Balance,PickUpDay,PickUpConfirmed,Start,End")] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                string userId = User.Identity.GetUserId();
+                Customer customerFromDb = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+                customerFromDb.FirstName = customer.FirstName;
+                customerFromDb.LastName = customer.LastName;
+                customerFromDb.StreetAddress = customer.StreetAddress;
+                customerFromDb.City = customer.City;
+                customerFromDb.State = customer.State;
+                customerFromDb.ZipCode = customer.ZipCode;
+                customerFromDb.Balance = customer.Balance;
+                customerFromDb.PickUpDay = customer.PickUpDay;
+                customerFromDb.PickUpConfirmed = customer.PickUpConfirmed;
+                customerFromDb.Start = customer.Start;
+                customerFromDb.End = customer.End;
+
+
+                db.SaveChanges();
+                return RedirectToAction("Index", "User");
             }
             return View(customer);
         }
 
         // GET: Customers/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
+
+            string userId = User.Identity.GetUserId();
+            Customer customer = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+            
             return View(customer);
         }
 
         // POST: Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed()
         {
-            Customer customer = db.Customers.Find(id);
+            string userId = User.Identity.GetUserId();
+            Customer customer = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
             db.Customers.Remove(customer);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "User");
         }
 
         protected override void Dispose(bool disposing)

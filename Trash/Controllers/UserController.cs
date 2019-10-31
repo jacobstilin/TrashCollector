@@ -12,7 +12,7 @@ namespace Trash.Controllers
     [Authorize]
     public class UserController : Controller
     {
-        
+        private ApplicationDbContext db = new ApplicationDbContext();
         // GET: User
         public ActionResult Index()
         {
@@ -20,11 +20,13 @@ namespace Trash.Controllers
             {
                 var user = User.Identity;
                 ViewBag.Name = user.Name;
-
+                
                 ViewBag.displayMenu = "No";
+
 
                 if (isEmployeeUser())
                 {
+
                     ViewBag.displayMenu = "Yes";
                 }
                 return View();
@@ -33,6 +35,7 @@ namespace Trash.Controllers
             {
                 ViewBag.Name = "Not Logged IN";
             }
+
             return View();
         }
 
