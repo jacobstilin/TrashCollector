@@ -52,6 +52,8 @@ namespace Trash.Controllers
             if (ModelState.IsValid)
             {
                 customer.ApplicationId = User.Identity.GetUserId();
+                customer.MonthlyCharge = 40;
+                customer.Balance = 0;
                 db.Customers.Add(customer);
                 db.SaveChanges();
                 return RedirectToAction("Index", "User");
@@ -75,23 +77,18 @@ namespace Trash.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,StreetAddress,City,State,ZipCode,Balance,PickUpDay,PickUpConfirmed,Start,End")] Customer customer)
+        public ActionResult Edit(Customer customer)
         {
             if (ModelState.IsValid)
             {
-                string userId = User.Identity.GetUserId();
-                Customer customerFromDb = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+                Customer customerFromDb = db.Customers.FirstOrDefault(c => c.Id == customer.Id);
                 customerFromDb.FirstName = customer.FirstName;
                 customerFromDb.LastName = customer.LastName;
                 customerFromDb.StreetAddress = customer.StreetAddress;
                 customerFromDb.City = customer.City;
                 customerFromDb.State = customer.State;
                 customerFromDb.ZipCode = customer.ZipCode;
-                customerFromDb.Balance = customer.Balance;
-                customerFromDb.PickUpDay = customer.PickUpDay;
-                customerFromDb.PickUpConfirmed = customer.PickUpConfirmed;
-                customerFromDb.Start = customer.Start;
-                customerFromDb.End = customer.End;
+                
                 
 
                 db.SaveChanges();
@@ -111,24 +108,83 @@ namespace Trash.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPickUp([Bind(Include = "Id,FirstName,LastName,StreetAddress,City,State,ZipCode,Balance,PickUpDay,PickUpConfirmed,Start,End")] Customer customer)
+        public ActionResult EditPickUp(Customer customer)
         {
             if (ModelState.IsValid)
             {
-                string userId = User.Identity.GetUserId();
-                Customer customerFromDb = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
-                customerFromDb.FirstName = customer.FirstName;
-                customerFromDb.LastName = customer.LastName;
-                customerFromDb.StreetAddress = customer.StreetAddress;
-                customerFromDb.City = customer.City;
-                customerFromDb.State = customer.State;
-                customerFromDb.ZipCode = customer.ZipCode;
-                customerFromDb.Balance = customer.Balance;
+                Customer customerFromDb = db.Customers.FirstOrDefault(c => c.Id == customer.Id);
+               
                 customerFromDb.PickUpDay = customer.PickUpDay;
-                customerFromDb.PickUpConfirmed = customer.PickUpConfirmed;
+               
+
+
+                db.SaveChanges();
+                return RedirectToAction("Index", "User");
+            }
+            return View(customer);
+        }
+
+        public ActionResult OneTimePickUp()
+        {
+
+            string userId = User.Identity.GetUserId();
+            Customer customer = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OneTimePickUp(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                Customer customerFromDb = db.Customers.FirstOrDefault(c => c.Id == customer.Id);
+                customerFromDb.ForTheOneTime = customer.ForTheOneTime;
+
+                db.SaveChanges();
+                return RedirectToAction("Index", "User");
+            }
+            return View(customer);
+        }
+
+        public ActionResult CheckBalance()
+        {
+
+            string userId = User.Identity.GetUserId();
+            Customer customer = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CheckBalance(Customer customer)
+        {
+
+            Customer customerFromDb = db.Customers.FirstOrDefault(c => c.Id == customer.Id);
+
+            return View(customer);
+        }
+
+        public ActionResult PausePickUps()
+        {
+
+            string userId = User.Identity.GetUserId();
+            Customer customer = db.Customers.FirstOrDefault(c => c.ApplicationId == userId);
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PausePickUps(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                Customer customerFromDb = db.Customers.FirstOrDefault(c => c.Id == customer.Id);
                 customerFromDb.Start = customer.Start;
                 customerFromDb.End = customer.End;
-
 
                 db.SaveChanges();
                 return RedirectToAction("Index", "User");

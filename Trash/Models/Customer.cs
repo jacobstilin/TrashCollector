@@ -35,7 +35,10 @@ namespace Trash.Models
         public int? ZipCode { get; set; }
 
         [Display(Name = "Pick Up Day")]
-        public DateTime? PickUpDay { get; set; }
+        public string PickUpDay { get; set; }
+
+        [Display(Name = "One Time Pick Up")]
+        public string ForTheOneTime { get; set; }
 
         [Display(Name = "Balance")]
         public double? Balance { get; set; }
