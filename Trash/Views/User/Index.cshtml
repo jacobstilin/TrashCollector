@@ -6,10 +6,11 @@
 
 @if (ViewBag.displayMenu == "Yes")
 {
-    <h1>Welcome Employee. Now you can do things.</h1>
-    <h3>
-        <li>@Html.ActionLink("Set Up", "Create", "Employees")</li>
-    </h3>
+    <h2>  Welcome <strong>@ViewBag.Name</strong>  </h2>
+
+    <li>@Html.ActionLink("Set Up Account", "Create", "Employees")</li>
+    <li>@Html.ActionLink("View Today's Pick Ups", "ViewPickUps", "Employees")</li>
+
 
 }
 else

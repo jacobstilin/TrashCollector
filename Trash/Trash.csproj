@@ -260,6 +260,7 @@
     <Content Include="Views\Customers\OneTimePickUp.cshtml" />
     <Content Include="Views\Customers\CheckBalance.cshtml" />
     <Content Include="Views\Customers\PausePickUps.cshtml" />
+    <Content Include="Views\Employees\ViewPickUps.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

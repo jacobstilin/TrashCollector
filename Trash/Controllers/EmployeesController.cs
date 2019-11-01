@@ -21,6 +21,20 @@ namespace Trash.Controllers
             return View(db.Employees.ToList());
         }
 
+
+
+        public ActionResult ViewPickUps()
+        {
+            string userId = User.Identity.GetUserId();
+            Employee employee = db.Employees.FirstOrDefault(c => c.ApplicationId == userId);
+
+            string wk = DateTime.Today.DayOfWeek.ToString();
+
+            return View(db.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == wk).ToList());
+        }
+
+        
+
         // GET: Employees/Details/5
         public ActionResult Details(int? id)
         {
