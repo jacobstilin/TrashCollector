@@ -33,7 +33,7 @@ namespace Trash.Controllers
             }
             else
             {
-                ViewBag.Name = "Not Logged IN";
+                ViewBag.displayMenu = "Nope";
             }
 
             return View();
