@@ -21,7 +21,7 @@ namespace Trash.Controllers
             return View(db.Employees.ToList());
         }
 
-
+        
 
         public ActionResult ViewPickUps()
         {
@@ -31,6 +31,28 @@ namespace Trash.Controllers
             string wk = DateTime.Today.DayOfWeek.ToString();
 
             return View(db.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == wk).ToList());
+        }
+
+        public ActionResult DayTable(string day)
+        {
+            string userId = User.Identity.GetUserId();
+            Employee employee = db.Employees.FirstOrDefault(c => c.ApplicationId == userId);
+
+            return View(db.Customers.Where(c => c.ZipCode == employee.ZipCode && c.PickUpDay == day).ToList());
+        }
+
+        public ActionResult DayPickUps()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DayPickUps(Customer customer)
+        {
+            string day = customer.PickUpDay;
+            return RedirectToAction("DayTable", new { day = day });
         }
 
         

@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Trash.Models.Customer>
 @{
-    ViewBag.Title = "ViewPickUps";
+    ViewBag.Title = "DayTable";
 }
 
-<h2>Today's Pick Ups</h2>
+<h2>Pick Ups</h2>
 
 <table class="table">
     <tr>
@@ -94,9 +94,8 @@
 </table>
 
 <div>
-    @Html.ActionLink("Filter By Week Day", "DayPickUps", "Employees")
+    @Html.ActionLink("Check Another Day", "DayPickUps", "Employees")
 </div>
 <div>
     @Html.ActionLink("Back To Menu", "Index", "User")
 </div>
-
